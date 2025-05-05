@@ -45,6 +45,7 @@ public class CalculatorController {
          * Sobald mit der zweiten Zahl zu tippen begonnen wird, soll die erste Zahl in eine Variable gespeichert Werden.
          * Wenn die zweite Zahl eingegeben wurde un der "=" Button geklickt wurde, wird das Ergebnis im Textfeld ausgegeben.
          */
+
         resultTextField.setText(resultTextField.getText().replace(",", "."));
 
         if (resultTextField.getText().equals("+") || resultTextField.getText().equals("-") || resultTextField.getText().equals("×") || resultTextField.getText().equals("÷") || resultTextField.getText().isEmpty()) {
@@ -54,6 +55,7 @@ public class CalculatorController {
         } else {
             calculate();
         }
+
         Button button = (Button) actionEvent.getSource();
         operation = button.getText().charAt(0);
         resultTextField.setText(operation.toString());
