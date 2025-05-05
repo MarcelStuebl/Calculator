@@ -80,7 +80,9 @@ public class CalculatorController {
     }
 
     public void commaButtonClicked(ActionEvent actionEvent) {
-        resultTextField.appendText(".");
+        if (!resultTextField.getText().contains(".")) {
+            resultTextField.appendText(".");
+        }
     }
 
     public void removeButtonClicked(ActionEvent actionEvent) {
