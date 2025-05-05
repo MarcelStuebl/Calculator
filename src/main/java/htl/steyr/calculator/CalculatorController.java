@@ -11,15 +11,17 @@ public class CalculatorController {
     public TextField resultTextField;
 
     private Character operation;
-    private float result;
+    private float result = 0;
 
     @FXML
     public void clearButtonClicked(ActionEvent actionEvent) {
         resultTextField.setText("0");
+        result = 0;
+        operation = null;
     }
 
     public void numberButtonCLicked(ActionEvent actionEvent) {
-        /**
+        /*
           Wenn man auf eine Zahl gedrückt wird, soll diese in das Textfeld geschrieben werden!
           Steht bereits eine Zahl im Textfeld, soll die neue Zahl angehängt werden.
          */
@@ -35,7 +37,7 @@ public class CalculatorController {
     }
 
     public void mathOperationClicked(ActionEvent actionEvent) {
-        /**
+        /*
          * Erstellen Sie die Logik zum Addieren zweier Zahlen.
          * Ablauf: Es wird die erste Zahl eingegeben.
          * Dann wird eine der vier Operatoren gewählt.
@@ -47,16 +49,17 @@ public class CalculatorController {
 
         if (resultTextField.getText().equals("+") || resultTextField.getText().equals("-") || resultTextField.getText().equals("×") || resultTextField.getText().equals("÷") || resultTextField.getText().isEmpty()) {
             resultTextField.setText(resultTextField.getText());
-        } else {
+        } else if (result == 0){
             result = Float.parseFloat(resultTextField.getText());
+        } else {
+            calculate();
         }
         Button button = (Button) actionEvent.getSource();
         operation = button.getText().charAt(0);
         resultTextField.setText(operation.toString());
     }
 
-    public void resultButtonClicked(ActionEvent actionEvent) {
-
+    private void calculate() {
         if (operation == '+') {
             result = result + Float.parseFloat(resultTextField.getText());
         } else if (operation == '-') {
@@ -66,7 +69,10 @@ public class CalculatorController {
         } else if (operation == '÷') {
             result = result / Float.parseFloat(resultTextField.getText());
         }
+    }
 
+    public void resultButtonClicked(ActionEvent actionEvent) {
+        calculate();
         if (result == (long) result) {
             resultTextField.setText(String.format("%d", (long) result));
         } else {
@@ -91,6 +97,8 @@ public class CalculatorController {
             resultTextField.setText(text.substring(0, text.length() - 1));
             if (resultTextField.getText().isEmpty()) {
                 resultTextField.setText("0");
+                result = 0;
+                operation = null;
             }
         }
     }
