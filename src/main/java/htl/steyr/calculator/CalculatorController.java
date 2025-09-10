@@ -110,7 +110,7 @@ public class CalculatorController {
 
 
 
-
+    // @ToDO
 
     public void textFieldOnKeyUp(KeyEvent keyEvent) {
         if (Objects.equals(keyEvent.getText(), "+") || Objects.equals(keyEvent.getText(), "-") || Objects.equals(keyEvent.getText(), "/") || Objects.equals(keyEvent.getText(), "*")) {
@@ -123,7 +123,7 @@ public class CalculatorController {
 
             resultTextField.setText(operation.toString());
 
-            if (resultTextField.getText().equals("+") || resultTextField.getText().equals("-") || resultTextField.getText().equals("×") || resultTextField.getText().equals("÷") || resultTextField.getText().isEmpty()) {
+            if ((resultTextField.getText().equals("+") || resultTextField.getText().equals("-") || resultTextField.getText().equals("×") || resultTextField.getText().equals("÷") || resultTextField.getText().isEmpty()) && result != 0) {
                 resultTextField.setText(resultTextField.getText());
             } else if (result == 0){
                 result = Float.parseFloat(resultTextField.getText());
@@ -146,11 +146,6 @@ public class CalculatorController {
 
 
 
-        resultTextField.setText(resultTextField.getText().replace(",", "."));
-        if (resultTextField.getText().charAt(0) == '0') {
-            resultTextField.setText(resultTextField.getText().substring(1));
-        }
-        resultTextField.positionCaret(resultTextField.getText().length());
 
 
     }
