@@ -7,6 +7,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 
+import java.util.Objects;
+
 public class CalculatorController {
     public TextField resultTextField;
 
@@ -105,12 +107,52 @@ public class CalculatorController {
         }
     }
 
+
+
+
+
+
     public void textFieldOnKeyUp(KeyEvent keyEvent) {
+        if (Objects.equals(keyEvent.getText(), "+") || Objects.equals(keyEvent.getText(), "-") || Objects.equals(keyEvent.getText(), "/") || Objects.equals(keyEvent.getText(), "*")) {
+            operation = keyEvent.getText().charAt(0);
+            if (operation == '*') {
+                operation = '×';
+            } else if (operation == '/') {
+                operation = '÷';
+            }
+
+            resultTextField.setText(operation.toString());
+
+            if (resultTextField.getText().equals("+") || resultTextField.getText().equals("-") || resultTextField.getText().equals("×") || resultTextField.getText().equals("÷") || resultTextField.getText().isEmpty()) {
+                resultTextField.setText(resultTextField.getText());
+            } else if (result == 0){
+                result = Float.parseFloat(resultTextField.getText());
+            } else {
+                calculate();
+            }
+        } else {
+
+            if (resultTextField.getText().equals("+") || resultTextField.getText().equals("-") || resultTextField.getText().equals("×") || resultTextField.getText().equals("÷") || resultTextField.getText().isEmpty()) {
+                resultTextField.clear();
+            }
+
+            if (resultTextField.getText().equals("0")) {
+                resultTextField.setText(keyEvent.getText());
+            } else {
+                resultTextField.appendText(keyEvent.getText());
+            }
+
+        }
+
+
+
         resultTextField.setText(resultTextField.getText().replace(",", "."));
         if (resultTextField.getText().charAt(0) == '0') {
             resultTextField.setText(resultTextField.getText().substring(1));
         }
         resultTextField.positionCaret(resultTextField.getText().length());
+
+
     }
 }
 
