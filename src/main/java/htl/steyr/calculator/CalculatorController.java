@@ -4,15 +4,22 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import java.util.Objects;
 
 public class CalculatorController {
     public TextField resultTextField;
+    public TextField logTextField;
 
     private Character operation;
     private float result = 0;
+    private boolean shift = false;
+    @FXML
+    private Button button1;
+    @FXML
+    private Button button2;
 
     @FXML
     public void clearButtonClicked(ActionEvent actionEvent) {
@@ -112,25 +119,52 @@ public class CalculatorController {
     // @ToDO
 
     public void textFieldOnKeyUp(KeyEvent keyEvent) {
-        if (Objects.equals(keyEvent.getText(), "+") || Objects.equals(keyEvent.getText(), "-") || Objects.equals(keyEvent.getText(), "/") || Objects.equals(keyEvent.getText(), "*")) {
+        System.out.println(keyEvent.getCode());
+        if (Objects.equals(keyEvent.getText(), "+") || Objects.equals(keyEvent.getText(), "-") || Objects.equals(keyEvent.getText(), "/") || Objects.equals(keyEvent.getText(), "*") || (Objects.equals(keyEvent.getText(), "7") && shift)) {
+
+
             operation = keyEvent.getText().charAt(0);
             if (operation == '*') {
                 operation = '×';
-            } else if (operation == '/') {
+            } else if (operation == '7') {
                 operation = '÷';
             }
 
-            resultTextField.setText(operation.toString());
-
-            if ((resultTextField.getText().equals("+") || resultTextField.getText().equals("-") || resultTextField.getText().equals("×") || resultTextField.getText().equals("÷") || resultTextField.getText().isEmpty()) && result != 0) {
-                resultTextField.setText(resultTextField.getText());
-            } else if (result == 0){
+            if (result == 0){
                 result = Float.parseFloat(resultTextField.getText());
             } else {
                 calculate();
             }
-        } else {
 
+            resultTextField.setText(operation.toString());
+            shift = false;
+        } else if (keyEvent.getCode() == KeyCode.SHIFT) {
+            shift = true;
+        } else if (keyEvent.getCode() == KeyCode.ENTER) {
+            calculate();
+            if (result == (long) result) {
+                resultTextField.setText(String.format("%d", (long) result));
+            } else {
+                resultTextField.setText(String.format("%s", result));
+            }
+        } else if (keyEvent.getCode() == KeyCode.BACK_SPACE) {
+            String text = resultTextField.getText();
+            if (!text.equals("0")) {
+                resultTextField.setText(text.substring(0, text.length() - 1));
+                if (resultTextField.getText().isEmpty()) {
+                    resultTextField.setText("0");
+                    result = 0;
+                    operation = null;
+                }
+            }
+        } else if(Objects.equals(keyEvent.getText(), "0") && shift){
+            calculate();
+            if (result == (long) result) {
+                resultTextField.setText(String.format("%d", (long) result));
+            } else {
+                resultTextField.setText(String.format("%s", result));
+            }
+        } else {
             if (resultTextField.getText().equals("+") || resultTextField.getText().equals("-") || resultTextField.getText().equals("×") || resultTextField.getText().equals("÷") || resultTextField.getText().isEmpty()) {
                 resultTextField.clear();
             }
@@ -140,7 +174,7 @@ public class CalculatorController {
             } else {
                 resultTextField.appendText(keyEvent.getText());
             }
-
+            shift = false;
         }
 
 
