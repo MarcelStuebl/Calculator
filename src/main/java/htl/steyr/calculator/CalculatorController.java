@@ -15,6 +15,8 @@ public class CalculatorController {
 
     private Character operation;
     private float result = 0;
+    private float num1 = 0;
+    private float num2 = 0;
     private boolean shift = false;
     @FXML
     private Button button1;
@@ -24,8 +26,12 @@ public class CalculatorController {
     @FXML
     public void clearButtonClicked(ActionEvent actionEvent) {
         resultTextField.setText("0");
+        logTextField.clear();
         result = 0;
+        num1 = 0;
+        num2 = 0;
         operation = null;
+        shift = false;
     }
 
     public void numberButtonCLicked(ActionEvent actionEvent) {
@@ -56,8 +62,8 @@ public class CalculatorController {
 
         resultTextField.setText(resultTextField.getText().replace(",", "."));
 
-        if (resultTextField.getText().equals("+") || resultTextField.getText().equals("-") || resultTextField.getText().equals("×") || resultTextField.getText().equals("÷") || resultTextField.getText().isEmpty()) {
-            resultTextField.setText(resultTextField.getText());
+        if ((resultTextField.getText().equals("+") || resultTextField.getText().equals("-") || resultTextField.getText().equals("×") || resultTextField.getText().equals("÷") || resultTextField.getText().isEmpty()) && result == 0) {
+            num1 = result;
         } else if (result == 0){
             result = Float.parseFloat(resultTextField.getText());
         } else {
@@ -66,10 +72,14 @@ public class CalculatorController {
 
         Button button = (Button) actionEvent.getSource();
         operation = button.getText().charAt(0);
+        logTextField.appendText(resultTextField.getText() + operation);
         resultTextField.setText(operation.toString());
     }
 
     private void calculate() {
+        num1 = result;
+        num2 = Integer.parseInt(resultTextField.getText());
+
         if (operation == '+') {
             result = result + Float.parseFloat(resultTextField.getText());
         } else if (operation == '-') {
@@ -88,6 +98,7 @@ public class CalculatorController {
         } else {
             resultTextField.setText(String.format("%s", result));
         }
+        logTextField.appendText(num2 + "=" + result);
     }
 
 
@@ -119,10 +130,7 @@ public class CalculatorController {
     // @ToDO
 
     public void textFieldOnKeyUp(KeyEvent keyEvent) {
-        System.out.println(keyEvent.getCode());
         if (Objects.equals(keyEvent.getText(), "+") || Objects.equals(keyEvent.getText(), "-") || Objects.equals(keyEvent.getText(), "/") || Objects.equals(keyEvent.getText(), "*") || (Objects.equals(keyEvent.getText(), "7") && shift)) {
-
-
             operation = keyEvent.getText().charAt(0);
             if (operation == '*') {
                 operation = '×';
@@ -135,7 +143,7 @@ public class CalculatorController {
             } else {
                 calculate();
             }
-
+            logTextField.appendText(resultTextField.getText() + operation);
             resultTextField.setText(operation.toString());
             shift = false;
         } else if (keyEvent.getCode() == KeyCode.SHIFT) {
@@ -147,6 +155,7 @@ public class CalculatorController {
             } else {
                 resultTextField.setText(String.format("%s", result));
             }
+            logTextField.appendText(num2 + "=" + result);
         } else if (keyEvent.getCode() == KeyCode.BACK_SPACE) {
             String text = resultTextField.getText();
             if (!text.equals("0")) {
@@ -164,7 +173,10 @@ public class CalculatorController {
             } else {
                 resultTextField.setText(String.format("%s", result));
             }
-        } else {
+            logTextField.appendText(num2 + "=" + result);
+        } else if (keyEvent.getText().equals("0") || keyEvent.getText().equals("1") || keyEvent.getText().equals("2") ||
+                keyEvent.getText().equals("3") || keyEvent.getText().equals("4") || keyEvent.getText().equals("5") ||
+                keyEvent.getText().equals("6") || keyEvent.getText().equals("7") || keyEvent.getText().equals("8") || keyEvent.getText().equals("9")) {
             if (resultTextField.getText().equals("+") || resultTextField.getText().equals("-") || resultTextField.getText().equals("×") || resultTextField.getText().equals("÷") || resultTextField.getText().isEmpty()) {
                 resultTextField.clear();
             }
