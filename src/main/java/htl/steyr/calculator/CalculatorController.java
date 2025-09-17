@@ -12,20 +12,18 @@ public class CalculatorController {
 
     private Character operation;
     private float result = 0;
-    private float num1 = 0;
-    private float num2 = 0;
+    private float num = 0;
 
 
     private void resetAll() {
         resultTextField.setText("0");
         logTextField.clear();
         result = 0;
-        num1 = 0;
-        num2 = 0;
+        num = 0;
         operation = null;
     }
 
-    private void appendNumber(String number) {
+    private void addNumber(String number) {
         if (resultTextField.getText().matches("[+\\-×÷]?")) {
             resultTextField.clear();
         }
@@ -36,12 +34,10 @@ public class CalculatorController {
         }
     }
 
-    private void applyOperation(Character op) {
+    private void setOperation(Character op) {
         resultTextField.setText(resultTextField.getText().replace(",", "."));
 
-        if (resultTextField.getText().matches("[+\\-×÷]?") && result == 0) {
-            num1 = result;
-        } else if (result == 0) {
+        if (result == 0) {
             result = Float.parseFloat(resultTextField.getText());
         } else {
             calculate();
@@ -60,7 +56,7 @@ public class CalculatorController {
         }
     }
 
-    private void handleBackspace() {
+    private void remove() {
         String text = resultTextField.getText();
         if (!text.equals("0")) {
             resultTextField.setText(text.substring(0, text.length() - 1));
@@ -70,45 +66,40 @@ public class CalculatorController {
         }
     }
 
-    // ---------- Buttons ----------
+    private void result(){
+        calculate();
+        formatAndDisplayResult();
+        logTextField.appendText(num + "=" + result);
+    }
+
+
     public void clearButtonClicked(ActionEvent actionEvent) {
         resetAll();
     }
 
     public void numberButtonCLicked(ActionEvent actionEvent) {
         Button button = (Button) actionEvent.getSource();
-        appendNumber(button.getText());
+        addNumber(button.getText());
     }
 
     public void mathOperationClicked(ActionEvent actionEvent) {
         Button button = (Button) actionEvent.getSource();
-        applyOperation(button.getText().charAt(0));
+        setOperation(button.getText().charAt(0));
     }
 
     private void calculate() {
-        num1 = result;
-        num2 = Float.parseFloat(resultTextField.getText());
+        num = Float.parseFloat(resultTextField.getText());
 
         switch (operation) {
-            case '+':
-                result += num2;
-                break;
-            case '-':
-                result -= num2;
-                break;
-            case '×':
-                result *= num2;
-                break;
-            case '÷':
-                result /= num2;
-                break;
+            case '+' -> result += num;
+            case '-' -> result -= num;
+            case '×' -> result *= num;
+            case '÷' -> result /= num;
         }
     }
 
     public void resultButtonClicked(ActionEvent actionEvent) {
-        calculate();
-        formatAndDisplayResult();
-        logTextField.appendText(num2 + "=" + result);
+        result();
     }
 
     public void invertButtonCLicked(ActionEvent actionEvent) {
@@ -122,10 +113,10 @@ public class CalculatorController {
     }
 
     public void removeButtonClicked(ActionEvent actionEvent) {
-        handleBackspace();
+        remove();
     }
 
-    // ---------- Tastatureingaben ----------
+
     public void textFieldOnKeyUp(KeyEvent keyEvent) {
         String key = keyEvent.getText();
 
@@ -136,15 +127,15 @@ public class CalculatorController {
             } else if (keyEvent.isShiftDown() && op == '7') {
                 op = '÷';
             }
-            applyOperation(op);
+            setOperation(op);
         } else if (keyEvent.getCode() == KeyCode.ENTER || keyEvent.isShiftDown() && (key.equals("0"))) {
-            calculate();
-            formatAndDisplayResult();
-            logTextField.appendText(num2 + "=" + result);
+            result();
         } else if (keyEvent.getCode() == KeyCode.BACK_SPACE) {
-            handleBackspace();
+            remove();
         } else if (key.matches("[0-9]")) {
-            appendNumber(key);
+            addNumber(key);
+        } else if (!resultTextField.getText().contains(".") && (key.matches(",") || key.matches("."))) {
+            resultTextField.appendText(".");
         }
     }
 }

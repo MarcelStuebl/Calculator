@@ -9,7 +9,7 @@ import javafx.scene.input.KeyEvent;
 import java.util.Objects;
 
 
-public class CalculatorControllerOld {
+public class CalculatorControllerOld { /**
     public TextField resultTextField;
     public TextField logTextField;
     private Character operation;
@@ -34,10 +34,6 @@ public class CalculatorControllerOld {
     }
 
     public void numberButtonCLicked(ActionEvent actionEvent) {
-        /*
-          Wenn man auf eine Zahl gedrückt wird, soll diese in das Textfeld geschrieben werden!
-          Steht bereits eine Zahl im Textfeld, soll die neue Zahl angehängt werden.
-         */
         if (resultTextField.getText().matches("[+\\-×÷]?")) {
 
             resultTextField.clear();
@@ -51,15 +47,6 @@ public class CalculatorControllerOld {
     }
 
     public void mathOperationClicked(ActionEvent actionEvent) {
-        /*
-         * Erstellen Sie die Logik zum Addieren zweier Zahlen.
-         * Ablauf: Es wird die erste Zahl eingegeben.
-         * Dann wird eine der vier Operatoren gewählt.
-         * Anschließend wird die zweite Zahl eingegeben.
-         * Sobald mit der zweiten Zahl zu tippen begonnen wird, soll die erste Zahl in eine Variable gespeichert Werden.
-         * Wenn die zweite Zahl eingegeben wurde un der "=" Button geklickt wurde, wird das Ergebnis im Textfeld ausgegeben.
-         */
-
         resultTextField.setText(resultTextField.getText().replace(",", "."));
 
         if (resultTextField.getText().matches("[+\\-×÷]?") && result == 0) {
@@ -91,6 +78,7 @@ public class CalculatorControllerOld {
             result = result / Float.parseFloat(resultTextField.getText());
         }
     }
+
 
     public void resultButtonClicked(ActionEvent actionEvent) {
         calculate();
@@ -189,7 +177,7 @@ public class CalculatorControllerOld {
 
 
 
-    }
+    }**/
 
 }
 
