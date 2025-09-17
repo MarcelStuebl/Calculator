@@ -127,9 +127,6 @@ public class CalculatorControllerOld {
 
 
 
-
-    // @ToDO
-
     public void textFieldOnKeyUp(KeyEvent keyEvent) {
         if (keyEvent.getText().matches("[+\\-/*]") || (shift && keyEvent.getText().matches("7"))) {
             operation = keyEvent.getText().charAt(0);
