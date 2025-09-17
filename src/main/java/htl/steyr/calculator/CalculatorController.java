@@ -13,6 +13,7 @@ public class CalculatorController {
     private Character operation;
     private float result = 0;
     private float num = 0;
+    private boolean isresult = false;
 
 
     private void resetAll() {
@@ -20,6 +21,7 @@ public class CalculatorController {
         logTextField.clear();
         result = 0;
         num = 0;
+        isresult = false;
         operation = null;
     }
 
@@ -66,10 +68,12 @@ public class CalculatorController {
         }
     }
 
-    private void result(){
+    private void result() {
         calculate();
         formatAndDisplayResult();
         logTextField.appendText(num + "=" + result);
+        num = 0;
+        isresult = true;
     }
 
 
@@ -88,13 +92,17 @@ public class CalculatorController {
     }
 
     private void calculate() {
-        num = Float.parseFloat(resultTextField.getText());
+        if (!isresult) {
+            num = Float.parseFloat(resultTextField.getText());
 
-        switch (operation) {
-            case '+' -> result += num;
-            case '-' -> result -= num;
-            case '×' -> result *= num;
-            case '÷' -> result /= num;
+            switch (operation) {
+                case '+' -> result += num;
+                case '-' -> result -= num;
+                case '×' -> result *= num;
+                case '÷' -> result /= num;
+            }
+        } else {
+            isresult = false;
         }
     }
 
