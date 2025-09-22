@@ -77,7 +77,7 @@ public class CalculatorController {
     }
 
 
-    public void clearButtonClicked(ActionEvent actionEvent) {
+    public void clearButtonClicked() {
         resetAll();
     }
 
@@ -106,21 +106,21 @@ public class CalculatorController {
         }
     }
 
-    public void resultButtonClicked(ActionEvent actionEvent) {
+    public void resultButtonClicked() {
         result();
     }
 
-    public void invertButtonCLicked(ActionEvent actionEvent) {
+    public void invertButtonCLicked() {
         resultTextField.setText(String.valueOf(-Float.parseFloat(resultTextField.getText())));
     }
 
-    public void commaButtonClicked(ActionEvent actionEvent) {
+    public void commaButtonClicked() {
         if (!resultTextField.getText().contains(".")) {
             resultTextField.appendText(".");
         }
     }
 
-    public void removeButtonClicked(ActionEvent actionEvent) {
+    public void removeButtonClicked() {
         remove();
     }
 
