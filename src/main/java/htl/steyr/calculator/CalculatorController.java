@@ -125,7 +125,7 @@ public class CalculatorController {
     }
 
 
-    public void textFieldOnKeyDown(KeyEvent keyEvent) {
+    public void textFieldOnKeyPressed(KeyEvent keyEvent) {
         String key = keyEvent.getText();
 
         if (key.matches("[+\\-/*]") || keyEvent.isShiftDown() && key.equals("7")) {
