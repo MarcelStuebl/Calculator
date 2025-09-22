@@ -111,7 +111,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <TextField fx:id="logTextField" alignment="CENTER_RIGHT" editable="false" layoutY="3.0" onKeyPressed="#textFieldOnKeyUp" prefHeight="15.0" prefWidth="320.0" style="-fx-background-color: transparent;">
+      <TextField fx:id="logTextField" alignment="CENTER_RIGHT" editable="false" layoutY="3.0" onKeyPressed="#textFieldOnKeyDown" prefHeight="15.0" prefWidth="320.0" style="-fx-background-color: transparent;">
          <font>
             <Font name="System Bold" size="10.0" />
          </font>
