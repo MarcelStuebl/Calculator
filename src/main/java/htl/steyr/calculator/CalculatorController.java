@@ -130,7 +130,7 @@ public class CalculatorController {
             char op = key.charAt(0);
             if (op == '*') {
                 op = '×';
-            } else if (keyEvent.isShiftDown() && op == '7') {
+            } else if (keyEvent.isShiftDown() && op == '7' || op == '/') {
                 op = '÷';
             }
             setOperation(op);
@@ -145,6 +145,8 @@ public class CalculatorController {
         }
     }
 }
+
+
 
 
 
