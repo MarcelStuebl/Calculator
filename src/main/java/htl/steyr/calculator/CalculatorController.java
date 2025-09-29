@@ -142,7 +142,7 @@ public class CalculatorController {
             remove();
         } else if (key.matches("[0-9]")) {
             addNumber(key);
-        } else if (!resultTextField.getText().contains(".") && ((key.matches(",") || key.matches(".")))) {
+        } else if (!resultTextField.getText().contains(".") && ((key.matches(",") || key.matches("\\.")))) {
             resultTextField.appendText(".");
         }
     }
