@@ -37,8 +37,6 @@ public class CalculatorController {
     }
 
     private void setOperation(Character op) {
-        resultTextField.setText(resultTextField.getText().replace(",", "."));
-
         if (result == 0) {
             result = Float.parseFloat(resultTextField.getText());
         } else {
